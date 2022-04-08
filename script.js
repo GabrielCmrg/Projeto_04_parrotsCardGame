@@ -57,9 +57,9 @@ function display(deck) {
 function gameInit() {
     lastCardFlipped = undefined;
     cardsPlayed = 0;
-    min = 0;
     sec = 0;
-    document.querySelector(".clock").innerHTML = `Tempo decorrido: ${("0" + min).slice(-2)}:${("0" + sec).slice(-2)}`;
+    time = formatTime(sec);
+    document.querySelector(".clock").innerHTML = `Tempo decorrido: ${time}`;
     const cards = generateDeck(getNumberOfCards());
     shuffle(cards);
     display(cards);
@@ -110,17 +110,38 @@ function flipCard(card) {
 
 function changeClock() {
     sec++;
-    if (sec > 59) {
-        sec = 0;
-        min++;
+    time = formatTime(sec);
+    document.querySelector(".clock").innerHTML = `Tempo decorrido: ${time}`;
+}
+
+function formatTime(secs) {
+    const seconds = secs % 60;
+    const min = Math.floor(secs / 60);
+    const minutes = min % 60;
+    const hr = Math.floor(min / 60);
+    const hour = hr % 24;
+    const days = Math.floor(hr / 24);
+
+    let time = ("0" + seconds.toString()).slice(-2);
+    if (minutes !== 0 || hour !== 0 || days !== 0) {
+        time = ("0" + minutes.toString()).slice(-2) + ":" + time;
     }
-    document.querySelector(".clock").innerHTML = `Tempo decorrido: ${("0" + min).slice(-2)}:${("0" + sec).slice(-2)}`;
+
+    if (hour !== 0 || days !== 0) {
+        time = ("0" + hour.toString()).slice(-2) + ":" + time;
+    }
+
+    if (days !== 0) {
+        time = days.toString() + ":" + time;
+    }
+
+    return time;
 }
 
 const cardsDisplay = document.querySelector(".cards");
 let lastCardFlipped;
 let cardsPlayed = 0;
-let min = 0;
 let sec = 0;
+let time = formatTime(sec);
 let gameStart = 0;
 gameInit();
