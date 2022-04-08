@@ -47,12 +47,15 @@ function shuffle(deck) {
 }
 
 function display(deck) {
+    cardsDisplay.innerHTML = "";
     for (let i = 0; i < deck.length; i++) {
         cardsDisplay.innerHTML += deck[i];
     }
 }
 
 function gameInit() {
+    lastCardFlipped = undefined;
+    cardsPlayed = 0;
     const cards = generateDeck(getNumberOfCards());
     shuffle(cards);
     display(cards);
@@ -66,6 +69,13 @@ function winCheck() {
     const unflippedCards = document.querySelectorAll(".flip");
     if (unflippedCards.length == 0) {
         setTimeout(alert, 1000, `Você ganhou em ${cardsPlayed} jogadas!`);
+        let restart;
+        do {
+            restart = prompt("Gostaria de reiniciar a partida?");
+        } while (restart !== "não" || restart !== "sim");
+        if (restart === "sim") {
+            gameInit();
+        }
     }
 }
 
