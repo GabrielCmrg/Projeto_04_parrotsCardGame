@@ -58,8 +58,25 @@ function gameInit() {
     display(cards);
 }
 
-function flipCard(card) {
+function flip(card) {
     card.classList.toggle("flip");
 }
 
+function flipCard(card) {
+    flip(card);
+
+    if (lastCardsFlipped === undefined) {
+        lastCardsFlipped = card;
+    } else if (lastCardsFlipped.innerHTML !== card.innerHTML){
+        setTimeout(flip, 1000, card);
+        setTimeout(flip, 1000, lastCardsFlipped);
+        lastCardsFlipped = undefined;
+    } else {
+        card.removeAttribute("onclick");
+        lastCardsFlipped.removeAttribute("onclick");
+        lastCardsFlipped = undefined;
+    }
+}
+
 const cardsDisplay = document.querySelector(".cards");
+let lastCardsFlipped;
