@@ -25,8 +25,18 @@ function generateDeck(numberOfCards) {
     const cards = [];
 
     for (let i = 0; i < numberOfCards / 2; i++) {
-        cards.push(`<div><img src=${cardFaces[i]}></img></div>`);
-        cards.push(`<div><img src=${cardFaces[i]}></img></div>`);
+        cards.push(`
+        <div class="flip" onclick="flipCard(this)">
+            <div class="back-face face"><img src="utils/front.png"></img></div>
+            <div class="front-face face"><img src=${cardFaces[i]}></img></div>
+        </div>
+        `);
+        cards.push(`
+        <div class="flip" onclick="flipCard(this)">
+            <div class="back-face face"><img src="utils/front.png"></img></div>
+            <div class="front-face face"><img src=${cardFaces[i]}></img></div>
+        </div>
+        `);
     }
 
     return cards;
@@ -46,6 +56,10 @@ function gameInit() {
     const cards = generateDeck(getNumberOfCards());
     shuffle(cards);
     display(cards);
+}
+
+function flipCard(card) {
+    card.classList.toggle("flip");
 }
 
 const cardsDisplay = document.querySelector(".cards");
