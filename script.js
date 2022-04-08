@@ -64,16 +64,17 @@ function flip(card) {
 
 function flipCard(card) {
     flip(card);
+    card.removeAttribute("onclick");
 
     if (lastCardsFlipped === undefined) {
         lastCardsFlipped = card;
     } else if (lastCardsFlipped.innerHTML !== card.innerHTML){
         setTimeout(flip, 1000, card);
+        card.setAttribute("onclick", "flipCard(this)");
         setTimeout(flip, 1000, lastCardsFlipped);
+        lastCardsFlipped.setAttribute("onclick", "flipCard(this)");
         lastCardsFlipped = undefined;
     } else {
-        card.removeAttribute("onclick");
-        lastCardsFlipped.removeAttribute("onclick");
         lastCardsFlipped = undefined;
     }
 }
