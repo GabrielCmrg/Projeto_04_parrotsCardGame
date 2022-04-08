@@ -56,26 +56,35 @@ function display(deck) {
 function gameInit() {
     lastCardFlipped = undefined;
     cardsPlayed = 0;
+    min = 0;
+    sec = 0;
+    document.querySelector(".clock").innerHTML = `Tempo decorrido: ${("0" + min).slice(-2)}:${("0" + sec).slice(-2)}`;
     const cards = generateDeck(getNumberOfCards());
     shuffle(cards);
     display(cards);
+    gameStart = setInterval(changeClock, 1000);
 }
 
 function flip(card) {
     card.classList.toggle("flip");
 }
 
+function restart() {
+    let restart;
+    do {
+        restart = prompt("Gostaria de reiniciar a partida?");
+    } while (restart !== "não" && restart !== "sim");
+    if (restart === "sim") {
+        gameInit();
+    }
+}
+
 function winCheck() {
     const unflippedCards = document.querySelectorAll(".flip");
     if (unflippedCards.length == 0) {
-        setTimeout(alert, 1000, `Você ganhou em ${cardsPlayed} jogadas!`);
-        let restart;
-        do {
-            restart = prompt("Gostaria de reiniciar a partida?");
-        } while (restart !== "não" || restart !== "sim");
-        if (restart === "sim") {
-            gameInit();
-        }
+        clearInterval(gameStart);
+        setTimeout(alert, 1000, `Você ganhou em ${cardsPlayed} jogadas e com um tempo de ${("0" + min).slice(-2)}:${("0" + sec).slice(-2)}!`);
+        setTimeout(restart, 1002);
     }
 }
 
@@ -98,6 +107,19 @@ function flipCard(card) {
     }
 }
 
+function changeClock() {
+    sec++;
+    if (sec > 59) {
+        sec = 0;
+        min++;
+    }
+    document.querySelector(".clock").innerHTML = `Tempo decorrido: ${("0" + min).slice(-2)}:${("0" + sec).slice(-2)}`;
+}
+
 const cardsDisplay = document.querySelector(".cards");
 let lastCardFlipped;
 let cardsPlayed = 0;
+let min = 0;
+let sec = 0;
+let gameStart = 0;
+gameInit();
