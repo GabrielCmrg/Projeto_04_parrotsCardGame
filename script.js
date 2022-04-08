@@ -22,6 +22,7 @@ function generateDeck(numberOfCards) {
         "/utils/tripletsparrot.gif",
         "/utils/unicornparrot.gif",
     ]
+    shuffle(cardFaces);
     const cards = [];
 
     for (let i = 0; i < numberOfCards / 2; i++) {
@@ -72,7 +73,7 @@ function flip(card) {
 function restart() {
     let restart;
     do {
-        restart = prompt("Gostaria de reiniciar a partida?");
+        restart = prompt("Gostaria de reiniciar a partida? (Digite apenas \"sim\" ou \"não\")");
     } while (restart !== "não" && restart !== "sim");
     if (restart === "sim") {
         gameInit();
