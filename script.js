@@ -62,22 +62,32 @@ function flip(card) {
     card.classList.toggle("flip");
 }
 
+function winCheck() {
+    const unflippedCards = document.querySelectorAll(".flip");
+    if (unflippedCards.length == 0) {
+        setTimeout(alert, 1000, `Você ganhou em ${cardsPlayed} jogadas!`);
+    }
+}
+
 function flipCard(card) {
     flip(card);
     card.removeAttribute("onclick");
+    cardsPlayed++;
 
-    if (lastCardsFlipped === undefined) {
-        lastCardsFlipped = card;
-    } else if (lastCardsFlipped.innerHTML !== card.innerHTML){
+    if (lastCardFlipped === undefined) {
+        lastCardFlipped = card;
+    } else if (lastCardFlipped.innerHTML !== card.innerHTML){
         setTimeout(flip, 1000, card);
         card.setAttribute("onclick", "flipCard(this)");
-        setTimeout(flip, 1000, lastCardsFlipped);
-        lastCardsFlipped.setAttribute("onclick", "flipCard(this)");
-        lastCardsFlipped = undefined;
+        setTimeout(flip, 1000, lastCardFlipped);
+        lastCardFlipped.setAttribute("onclick", "flipCard(this)");
+        lastCardFlipped = undefined;
     } else {
-        lastCardsFlipped = undefined;
+        lastCardFlipped = undefined;
+        winCheck();
     }
 }
 
 const cardsDisplay = document.querySelector(".cards");
-let lastCardsFlipped;
+let lastCardFlipped;
+let cardsPlayed = 0;
