@@ -84,7 +84,7 @@ function winCheck() {
     const unflippedCards = document.querySelectorAll(".flip");
     if (unflippedCards.length == 0) {
         clearInterval(gameStart);
-        setTimeout(alert, 1000, `Você ganhou em ${cardsPlayed} jogadas e com um tempo de ${("0" + min).slice(-2)}:${("0" + sec).slice(-2)}!`);
+        setTimeout(alert, 1000, `Você ganhou em ${cardsPlayed} jogadas e com um tempo de ${time}!`);
         setTimeout(restart, 1002);
     }
 }
